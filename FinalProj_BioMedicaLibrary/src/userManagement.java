@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class userManagement implements userManagementInterface {
     private Connection connection;
+    private String currentUsername; // Field to store the current username
 
     // Constructor to initialize the database connection
     public userManagement() {
@@ -19,6 +20,19 @@ public class userManagement implements userManagementInterface {
         } catch (SQLException e) {
             System.out.println("Error connecting to the database: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return currentUsername; // Getter method for current username
+    }
+
+    public Connection getConnection() {
+        return connection; // Return the current database connection
+    }
+
+    public void setCurrentUsername(String username) {
+        this.currentUsername = username; // Setter method for current username
     }
 
     @Override
@@ -52,6 +66,7 @@ public class userManagement implements userManagementInterface {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                setCurrentUsername(username); // Set the current username
                 System.out.println("Author login successful.");
                 return true;
             }
@@ -69,6 +84,7 @@ public class userManagement implements userManagementInterface {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                setCurrentUsername(username); // Set the current username
                 System.out.println("Learner login successful.");
                 return true;
             }
@@ -109,16 +125,16 @@ public class userManagement implements userManagementInterface {
                 case 2 -> deleteUser (scanner);
                 case 3 -> {
                     System.out.println("Logging out...");
-                    return; // Exit the admin actions loop
+                    return; // Exit admin actions
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> System.out.println("Invalid option. Please try again.");
             }
         }
     }
 
-    private void viewAllUsers() {
+    private void viewAllUsers() throws SQLException {
         String sql = "SELECT * FROM Users";
-        try (PreparedStatement preparedStatement = connection .prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             System.out.println("User  List:");
             while (resultSet.next()) {
@@ -131,7 +147,7 @@ public class userManagement implements userManagementInterface {
         }
     }
 
-    private void deleteUser (Scanner scanner) {
+    private void deleteUser (Scanner scanner) throws SQLException {
         System.out.print("Enter username to delete: ");
         String usernameToDelete = scanner.nextLine();
         String sql = "DELETE FROM Users WHERE username = ?";
@@ -148,16 +164,15 @@ public class userManagement implements userManagementInterface {
         }
     }
 
-    // Method to close the database connection
     @Override
     public void closeConnection() {
-        if (connection != null) {
-            try {
+        try {
+            if (connection != null && !connection.isClosed()) {
                 connection.close();
                 System.out.println("Database connection closed.");
-            } catch (SQLException e) {
-                System.out.println("Error closing connection: " + e.getMessage());
             }
+        } catch (SQLException e) {
+            System.out.println("Error closing the database connection: " + e.getMessage());
         }
     }
 }

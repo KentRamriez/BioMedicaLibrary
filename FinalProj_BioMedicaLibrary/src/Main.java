@@ -1,4 +1,7 @@
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Main {
@@ -104,18 +107,39 @@ public class Main {
 
     private static void submitArticle() {
         System.out.print("Enter article title: ");
-        @SuppressWarnings("unused")
         String title = scanner.nextLine();
         System.out.print("Enter article content: ");
-        @SuppressWarnings("unused")
         String content = scanner.nextLine();
-        // Logic to save the article to the database
-        System.out.println("Article submitted successfully!");
+
+        String sql = "INSERT INTO Articles (title, content, authorUsername) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = ((Statement) userManagement).getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, content);
+            preparedStatement.setString(3, userManagement.getCurrentUsername()); // Get the current username
+            preparedStatement.executeUpdate();
+            System.out.println("Article submitted successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error submitting article: " + e.getMessage());
+        }
     }
 
     private static void viewSubmittedArticles() {
-        // Logic to retrieve and display submitted articles from the database
-        System.out.println("Displaying submitted articles...");
+        String sql = "SELECT title, content FROM Articles WHERE authorUsername = ?";
+        try (PreparedStatement preparedStatement = ((Statement) userManagement).getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, userManagement.getCurrentUsername()); // Get the current username
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            System.out.println("Submitted Articles:");
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String content = resultSet.getString("content");
+                System.out.println("Title: " + title);
+                System.out.println("Content: " + content);
+                System.out.println("---------------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving submitted articles: " + e.getMessage());
+        }
     }
 
     private static void learnerActions() {
@@ -143,12 +167,41 @@ public class Main {
     private static void searchArticles() {
         System.out.print("Enter search term: ");
         String searchTerm = scanner.nextLine();
-        // Logic to search for articles in the database
-        System.out.println("Searching for articles related to: " + searchTerm);
+        String sql = "SELECT title, content FROM Articles WHERE title LIKE ? OR content LIKE ?";
+        
+        try (PreparedStatement preparedStatement = ((Statement) userManagement).getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, "%" + searchTerm + "%");
+            preparedStatement.setString(2, "%" + searchTerm + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            System.out.println("Search Results:");
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String content = resultSet.getString("content");
+                System.out.println("Title: " + title);
+                System.out.println("Content: " + content);
+                System.out.println("---------------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching for articles: " + e.getMessage());
+        }
     }
 
     private static void viewReadingHistory() {
-        // Logic to retrieve and display the learner's reading history
-        System.out.println("Displaying reading history...");
+        String sql = "SELECT articleTitle, readDate FROM ReadingHistory WHERE username = ?";
+        try (PreparedStatement preparedStatement = ((Statement) userManagement).getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, userManagement.getCurrentUsername()); // Get the current username
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            System.out.println("Reading History:");
+            while (resultSet.next ()) {
+                String articleTitle = resultSet.getString("articleTitle");
+                String readDate = resultSet.getString("readDate");
+                System.out.println("Article Title: " + articleTitle + ", Read Date: " + readDate);
+                System.out.println("---------------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving reading history: " + e.getMessage());
+        }
     }
 }

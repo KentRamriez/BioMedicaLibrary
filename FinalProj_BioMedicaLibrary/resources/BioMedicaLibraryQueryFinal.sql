@@ -1,6 +1,6 @@
 USE BioMedicaLibrary;
 
-CREATE TABLE users (
+/*CREATE TABLE users (
     id INT IDENTITY(1,1) PRIMARY KEY,  
     username NVARCHAR(50) NOT NULL UNIQUE, 
     password NVARCHAR(255) NOT NULL,  
@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, password, role) 
-VALUES ('admin', 'hashed_admin_password', 'Admin');
+VALUES ('admin', 'hashed_admin_password', 'Admin');*/
 
 CREATE TABLE articles (
     id INT IDENTITY(1,1) PRIMARY KEY,
