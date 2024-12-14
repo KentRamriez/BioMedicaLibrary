@@ -6,5 +6,5 @@ public interface userManagementInterface {
     boolean loginAsAuthor(String username, String password);
     boolean loginAsLearner(String username, String password);
     void adminLogin(Scanner scanner) throws SQLException;
-    void closeConnection(); // Add this line
+    void closeConnection();
 }
