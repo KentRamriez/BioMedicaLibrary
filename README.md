@@ -25,8 +25,7 @@ Encapsulation is the practice of bundling the data (attributes) and methods (fun
 
 **Example in the Project:**
 - The `User Management` class encapsulates user-related data and methods. Attributes like `username` and `password` are private, and access to them is provided through public methods (getters and setters).
-- 
-'''java 
+  
 public class UserManagement {
     private String username;
     private String password;
@@ -39,7 +38,7 @@ public class UserManagement {
         this.username = username;
     }
 }
-'''
+
 
 ### 2. Abstraction
 Abstraction is the principle of hiding the complex implementation details and exposing only the essential features of the object. This reduces programming complexity and increases efficiency.
