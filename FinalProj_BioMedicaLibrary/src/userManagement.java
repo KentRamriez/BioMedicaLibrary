@@ -10,9 +10,9 @@ public class userManagement implements userManagementInterface {
 
     // Constructor to initialize the database connection
     public userManagement() {
-        String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=User  ManagementDB"; // Ensure this matches your database name
-        String user = "yourUsername";  // Replace with your database username
-        String password = "yourPassword";  // Replace with your database password
+        String dbUrl = "jdbc:sqlserver://localhost:1433;databaseName=BioMedicaLibrary";
+        String user = "Kinetics";
+        String password = "Loe";
         try {
             connection = DriverManager.getConnection(dbUrl, user, password);
             System.out.println("Database connection established.");
