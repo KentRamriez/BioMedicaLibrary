@@ -2,12 +2,12 @@
 
 ## Overview
 
-BioMedicaLibrary is a Java-based application designed to facilitate user registrations, logins, and article management for a biomedical library. The application supports two types of users: Authors and Learners, each with specific functionalities. The system is built using Object-Oriented Programming (OOP) principles, ensuring modularity, reusability, and maintainability.
+**BioMedicaLibrary** is a Java-based application designed to facilitate user registration, login, and article management for a biomedical library. The application supports two types of users: **Authors** and **Learners**, each with specific functionalities. The system is built using Object-Oriented Programming (OOP) principles to ensure modularity, reusability, and maintainability.
 
 ## Features
 
-- **User  Registration**: Allows new users to register as Authors or Learners.
-- **User  Login**: Enables registered users to log in to their accounts.
+- **User Registration**: Allows new users to register as Authors or Learners.
+- **User Login**: Enables registered users to log in to their accounts.
 - **Admin Login**: Provides administrative access for managing users and articles.
 - **Article Management**: Authors can add and manage articles, while Learners can browse and filter articles.
 
@@ -17,16 +17,20 @@ BioMedicaLibrary is a Java-based application designed to facilitate user registr
 - **JDBC**: For database connectivity.
 - **SQL Server**: The database used to store user and article information.
 
-## OOP Principles
+## Sustainable Development Goals (SDGs) Implemented
+
+- **SDG 3: Good Health and Well-Being**: Aligns with promoting access to biomedical research and health information.
+- **SDG 4: Quality Education**: Facilitates access to educational resources and training in the biomedical field.
+- **SDG 9: Industry, Innovation, and Infrastructure**: Supports research and innovation in health technologies.
+- **SDG 17: Partnerships for the Goals**: Encourages collaboration among stakeholders in the health sector.
+
+## Object-Oriented Programming (OOP) Principles
 
 ### 1. Encapsulation
+Encapsulation involves bundling data (attributes) and methods (functions) into a single unit or class, restricting direct access to object components to prevent accidental data modification.
 
-Encapsulation is the practice of bundling the data (attributes) and methods (functions) that operate on the data into a single unit, or class. It restricts direct access to some of the object's components, which helps prevent accidental modification of data.
-
-**Example in the Project:**
-- The `User Management` class encapsulates user-related data and methods. Attributes like `username` and `password` are private, and access to them is provided through public methods (getters and setters).
-- 
-'''java
+**Example:**
+```java
 public class UserManagement {
     private String username;
     private String password;
@@ -38,29 +42,34 @@ public class UserManagement {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
-'''
+```
 
 ### 2. Abstraction
-Abstraction is the principle of hiding the complex implementation details and exposing only the essential features of the object. This reduces programming complexity and increases efficiency.
+Abstraction hides complex implementation details and exposes only the essential features, reducing programming complexity and increasing efficiency.
 
-**Example in the Project:**
-
-The User ManagementInterface defines the methods for user management without exposing the underlying implementation. Classes like User Management implement this interface, providing specific functionality while hiding the complexity from the user.
-
+**Example:**
+```java
 public interface UserManagementInterface {
     void register(Scanner scanner) throws SQLException;
     boolean loginAsAuthor(String username, String password);
     boolean loginAsLearner(String username, String password);
 }
+```
 
 ### 3. Inheritance
-Inheritance is a mechanism where a new class inherits properties and behavior (methods) from an existing class. This promotes code reusability and establishes a relationship between classes.
+Inheritance allows a new class to inherit properties and methods from an existing class, promoting code reusability and relationships between classes.
 
-**Example in the Project:**
-
-A base class User  contains common attributes like username and password. Subclasses like Author and Learner inherit from User , allowing them to reuse common functionality while adding specific features.
-
+**Example:**
+```java
 public class User {
     protected String username;
     protected String password;
@@ -75,14 +84,13 @@ public class Author extends User {
 public class Learner extends User {
     // Learner-specific methods
 }
+```
 
 ### 4. Polymorphism
-Polymorphism allows methods to do different things based on the object it is acting upon, even if they share the same name. This can be achieved through method overriding and method overloading.
+Polymorphism allows methods to perform differently based on the object they act upon. This is achieved through method overriding and overloading.
 
-**Example in the Project:**
-
-Both Author and Learner classes have a method called login. Polymorphism allows you to call this method on an object of type User , and the correct method will be executed based on the actual object type.
-
+**Example:**
+```java
 public class User {
     public void login() {
         // Default login behavior
@@ -102,19 +110,27 @@ public class Learner extends User {
         // Learner-specific login behavior
     }
 }
+```
 
-### Usage
-**1. Clone the Repository:**
+## Usage
 
-'git clone https://github.com/yourusername/BioMedicaLibrary.git
-cd BioMedicaLibrary'
+### 1. Clone the Repository:
+```bash
+git clone https://github.com/yourusername/BioMedicaLibrary.git
+cd BioMedicaLibrary
+```
 
-**2.Compile the Java Files:**
+### 2. Compile the Java Files:
+```bash
+javac *.java
+```
 
-'javac *.java'
+### 3. Run the Application:
+```bash
+java Main
+```
 
-**3.Run the Application:**
+### 4. Follow the On-Screen Prompts:
+- Register, log in, or manage articles.
+- Enjoy using **BioMedicaLibrary**!
 
-'java Main'
-
-**4. Follow the On-Screen Prompts to register, log in, or manage articles. And Enjoy!**
