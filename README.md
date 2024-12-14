@@ -25,7 +25,7 @@ Encapsulation is the practice of bundling the data (attributes) and methods (fun
 
 **Example in the Project:**
 - The `User Management` class encapsulates user-related data and methods. Attributes like `username` and `password` are private, and access to them is provided through public methods (getters and setters).
-  
+  -
 public class UserManagement {
     private String username;
     private String password;
@@ -39,7 +39,6 @@ public class UserManagement {
     }
 }
 
-
 ### 2. Abstraction
 Abstraction is the principle of hiding the complex implementation details and exposing only the essential features of the object. This reduces programming complexity and increases efficiency.
 
@@ -47,13 +46,11 @@ Abstraction is the principle of hiding the complex implementation details and ex
 
 The User ManagementInterface defines the methods for user management without exposing the underlying implementation. Classes like User Management implement this interface, providing specific functionality while hiding the complexity from the user.
 
-'''java
 public interface UserManagementInterface {
     void register(Scanner scanner) throws SQLException;
     boolean loginAsAuthor(String username, String password);
     boolean loginAsLearner(String username, String password);
 }
-'''
 
 ### 3. Inheritance
 Inheritance is a mechanism where a new class inherits properties and behavior (methods) from an existing class. This promotes code reusability and establishes a relationship between classes.
@@ -62,7 +59,6 @@ Inheritance is a mechanism where a new class inherits properties and behavior (m
 
 A base class User  contains common attributes like username and password. Subclasses like Author and Learner inherit from User , allowing them to reuse common functionality while adding specific features.
 
-'''java
 public class User {
     protected String username;
     protected String password;
@@ -77,7 +73,6 @@ public class Author extends User {
 public class Learner extends User {
     // Learner-specific methods
 }
-'''
 
 ### 4. Polymorphism
 Polymorphism allows methods to do different things based on the object it is acting upon, even if they share the same name. This can be achieved through method overriding and method overloading.
@@ -86,13 +81,12 @@ Polymorphism allows methods to do different things based on the object it is act
 
 Both Author and Learner classes have a method called login. Polymorphism allows you to call this method on an object of type User , and the correct method will be executed based on the actual object type.
 
-'''java
 public class User {
     public void login() {
         // Default login behavior
     }
 }
-'''
+
 public class Author extends User {
     @Override
     public void login() {
@@ -109,19 +103,19 @@ public class Learner extends User {
 
 ### Usage
 **1. Clone the Repository:**
-'''console
+
 git clone https://github.com/yourusername/BioMedicaLibrary.git
 cd BioMedicaLibrary
-'''
+
 
 **2.Compile the Java Files:**
-'''console
+
 javac *.java
-'''
+
 
 **3.Run the Application:**
-'''console
+
 java Main
-'''
+
 
 **4. Follow the On-Screen Prompts to register, log in, or manage articles. And Enjoy!**
