@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     static final Scanner scanner = new Scanner(System.in);
-    private static final userManagementInterface userManagement = new userManagement(); // Corrected class name
+    private static final userManagementInterface userManagement = new userManagement();
 
     public static void main(String[] args) {
         displayInterface();
@@ -37,14 +37,10 @@ public class Main {
                     }
                 }
                 case 4 -> {
-                    try (scanner) {
-                        System.out.println("Exiting...");
-                        userManagement.closeConnection(); // Close the database connection
-                        // Close the scanner
-                    }
-                    return;
+                    System.out.println("Exiting...");
+                    userManagement.closeConnection(); // Close the database connection
+                    return; // Exit the application
                 }
-
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
@@ -67,7 +63,7 @@ public class Main {
             case 1 -> {
                 if (userManagement.loginAsAuthor(username, password)) {
                     System.out.println("Welcome, Author!");
-                    // Author-specific actions can be added here
+                    authorActions(); // Call Author-specific actions
                 } else {
                     System.out.println("Login failed for Author.");
                 }
@@ -75,12 +71,84 @@ public class Main {
             case 2 -> {
                 if (userManagement.loginAsLearner(username, password)) {
                     System.out.println("Welcome, Learner!");
-                    // Learner-specific actions can be added here
+                    learnerActions(); // Call Learner-specific actions
                 } else {
                     System.out.println("Login failed for Learner.");
                 }
             }
             default -> System.out.println("Invalid option. Please try again.");
         }
+    }
+
+    private static void authorActions() {
+        while (true) {
+            System.out.println("Author Actions:");
+            System.out.println("1. Submit Article");
+            System.out.println("2. View Submitted Articles");
+            System.out.println("3. Logout");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1 -> submitArticle(); // Method to handle article submission
+                case 2 -> viewSubmittedArticles(); // Method to view submitted articles
+                case 3 -> {
+                    System.out.println("Logging out...");
+                    return; // Exit the author actions loop
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void submitArticle() {
+        System.out.print("Enter article title: ");
+        @SuppressWarnings("unused")
+        String title = scanner.nextLine();
+        System.out.print("Enter article content: ");
+        @SuppressWarnings("unused")
+        String content = scanner.nextLine();
+        // Logic to save the article to the database
+        System.out.println("Article submitted successfully!");
+    }
+
+    private static void viewSubmittedArticles() {
+        // Logic to retrieve and display submitted articles from the database
+        System.out.println("Displaying submitted articles...");
+    }
+
+    private static void learnerActions() {
+        while (true) {
+            System.out.println("Learner Actions:");
+            System.out.println("1. Search Articles");
+            System.out.println("2. View Reading History");
+            System.out.println("3. Logout");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1 -> searchArticles(); // Method to handle article search
+                case 2 -> viewReadingHistory(); // Method to view reading history
+                case 3 -> {
+                    System.out.println("Logging out...");
+                    return; // Exit the learner actions loop
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void searchArticles() {
+        System.out.print("Enter search term: ");
+        String searchTerm = scanner.nextLine();
+        // Logic to search for articles in the database
+        System.out.println("Searching for articles related to: " + searchTerm);
+    }
+
+    private static void viewReadingHistory() {
+        // Logic to retrieve and display the learner's reading history
+        System.out.println("Displaying reading history...");
     }
 }

@@ -88,10 +88,64 @@ public class userManagement implements userManagementInterface {
 
         if ("admin".equals(adminUsername) && "admin123".equals(adminPassword)) {
             System.out.println("Admin login successful.");
-            // Admin-specific actions can be added here
+            adminActions(scanner); // Call the method to handle admin actions
         } else {
             System.out.println("Admin login failed.");
- }
+        }
+    }
+
+    private void adminActions(Scanner scanner) throws SQLException {
+        while (true) {
+            System.out.println("\nAdmin Actions:");
+            System.out.println("1. View All Users");
+            System.out.println("2. Delete User");
+            System.out.println("3. Logout");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1 -> viewAllUsers();
+                case 2 -> deleteUser (scanner);
+                case 3 -> {
+                    System.out.println("Logging out...");
+                    return; // Exit the admin actions loop
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private void viewAllUsers() {
+        String sql = "SELECT * FROM Users";
+        try (PreparedStatement preparedStatement = connection .prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            System.out.println("User  List:");
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+                String role = resultSet.getString("role");
+                System.out.println("Username: " + username + ", Role: " + role);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving users: " + e.getMessage());
+        }
+    }
+
+    private void deleteUser (Scanner scanner) {
+        System.out.print("Enter username to delete: ");
+        String usernameToDelete = scanner.nextLine();
+        String sql = "DELETE FROM Users WHERE username = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, usernameToDelete);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("User  " + usernameToDelete + " deleted successfully.");
+            } else {
+                System.out.println("User  not found.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting user: " + e.getMessage());
+        }
     }
 
     // Method to close the database connection
