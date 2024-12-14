@@ -104,18 +104,15 @@ public class Learner extends User {
 ### Usage
 **1. Clone the Repository:**
 
-git clone https://github.com/yourusername/BioMedicaLibrary.git
-cd BioMedicaLibrary
-
+'git clone https://github.com/yourusername/BioMedicaLibrary.git
+cd BioMedicaLibrary'
 
 **2.Compile the Java Files:**
-'''plain text
-javac *.java
-'''
+
+'javac *.java'
 
 **3.Run the Application:**
 
-java Main
-
+'java Main'
 
 **4. Follow the On-Screen Prompts to register, log in, or manage articles. And Enjoy!**
