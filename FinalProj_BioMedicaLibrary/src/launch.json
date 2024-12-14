@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main", // Change this to your main class name
+            "classPaths": [
+                "lib/mysql-connector-java-9.1.0.jar", // Adjust the path as necessary
+                "bin" // Assuming your compiled classes are in the bin directory
+            ]
+        }
+    ]
+}
